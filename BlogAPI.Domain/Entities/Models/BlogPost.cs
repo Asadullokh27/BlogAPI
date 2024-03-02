@@ -21,6 +21,8 @@ namespace BlogAPI.Domain.Entities.Models
         public ICollection<Comment> Comments { get; set; } // Assuming Comment is another model
         public int Likes { get; set; }
         public int Views { get; set; }
+        public int UserId { get; set; }
+        public User User { get; set; }
 
     }
 }

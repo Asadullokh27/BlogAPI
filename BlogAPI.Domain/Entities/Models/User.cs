@@ -10,12 +10,14 @@ namespace BlogAPI.Domain.Entities.Models
     {
 
         public int Id { get; set; }
-        public string Name { get; set; }
+        public string FullName { get; set; }
         public string Email { get; set; }
         public string Login { get; set; }
         public int RoleId { get; set; }
         public string PasswordHash { get; set; }
         public string Salt { get; set; }
+        public int BlogPostId { get; set; }
+        public BlogPost BlogPost { get; set; }
         public Role Role { get; set; }
 
     }
