@@ -11,7 +11,8 @@ namespace BlogAPI.Domain.Entities.DTOs
         public string Name { get; set; }
         public string Email { get; set; }
         public string Login { get; set; }
-        public int RoleId { get; set; }
         public string PasswordHash { get; set; }
+        public string ConfirmPassword { get; set; }
+        public int Role { get; set; }
     }
 }

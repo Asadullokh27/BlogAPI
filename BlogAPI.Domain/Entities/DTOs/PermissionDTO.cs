@@ -9,6 +9,5 @@ namespace BlogAPI.Domain.Entities.DTOs
     public class PermissionDTO
     {
         public string Name { get; set; }
-        public List<int> Roles { get; set; }
     }
 }

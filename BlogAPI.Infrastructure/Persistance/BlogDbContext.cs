@@ -36,14 +36,17 @@ namespace BlogAPI.Infrastructure.Persistance
 
             modelBuilder.Entity<BlogPost>()
                 .HasOne(b => b.User)
-                .WithOne(u => u.BlogPost)
-                .HasForeignKey<BlogPost>(b => b.User.Id);
+                .WithMany(u => u.BlogPosts)
+                .HasForeignKey(b => b.UserId);
+
+
+            modelBuilder.Entity<Comment>()
+                .HasOne(y => y.BlogPost)
+                .WithMany(z => z.Comments)
+                .HasForeignKey(y => y.BlogPostId);
 
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
-
         }
-
-
     }
 }

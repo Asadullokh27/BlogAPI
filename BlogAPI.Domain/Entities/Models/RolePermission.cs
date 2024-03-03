@@ -10,9 +10,6 @@ namespace BlogAPI.Domain.Entities.Models
     {
         public int RoleId { get; set; }
         public int PermissionId { get; set; }
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public List<Permission> Permissions { get; set; }
 
     }
 }
