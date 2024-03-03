@@ -10,4 +10,8 @@
     <ProjectReference Include="..\BlogAPI.Domain\BlogAPI.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Services\AuthServices\" />
+  </ItemGroup>
+
 </Project>
