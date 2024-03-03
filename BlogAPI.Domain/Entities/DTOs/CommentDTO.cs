@@ -4,16 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BlogAPI.Domain.Entities.Models
+namespace BlogAPI.Domain.Entities.DTOs
 {
-    public class Comment
+    public class CommentDTO
     {
-        public int Id { get; set; }
         public string Author { get; set; }
         public string Content { get; set; }
         public string CreationDate { get; set; }
         public int BlogPostId { get; set; }
-        public BlogPost BlogPost { get; set; }
-
     }
 }
