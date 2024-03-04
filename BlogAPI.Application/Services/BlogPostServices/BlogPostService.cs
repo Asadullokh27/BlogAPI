@@ -19,8 +19,17 @@ namespace BlogAPI.Application.Services.BlogPostServices
             _blogrepository = blogrepo;
         }
 
-        public async Task<BlogPost> CreateProduct(BlogPostDTO perDTO)
+        public async Task<BlogPost> CreateBlogPost(BlogPostDTO perDTO)
         {
+
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", Guid.NewGuid() + "_" + perDTO.Image.FileName);
+
+            using (var stream = new FileStream(path, FileMode.Create))
+            {
+                await perDTO.Image.CopyToAsync(stream);
+            }
+
+
             var s = await _blogrepository.Create(new BlogPost()
             {
                 Title = perDTO.Title,
@@ -30,7 +39,7 @@ namespace BlogAPI.Application.Services.BlogPostServices
             return s;
         }
 
-        public async Task<bool> DeleteProductById(int id)
+        public async Task<bool> DeleteBlogPostById(int id)
         {
             var x = await _blogrepository.Delete(x => x.Id == id);
             return x;
@@ -42,12 +51,12 @@ namespace BlogAPI.Application.Services.BlogPostServices
             return x;
         }
 
-        public async Task<IEnumerable<BlogPost>> GetAllProducts()
+        public async Task<IEnumerable<BlogPost>> GetAllBlogPosts()
         {
             return await _blogrepository.GetAll();
         }
 
-        public async Task<BlogPost> GetProductById(int id)
+        public async Task<BlogPost> GetBlogPostById(int id)
         {
             return await _blogrepository.GetByAny(x => x.Id == id);
         }
@@ -57,7 +66,7 @@ namespace BlogAPI.Application.Services.BlogPostServices
             return await _blogrepository.GetByAny(x => x.Title == title);
         }
 
-        public async Task<BlogPost> UpdateProductById(int id, BlogPostDTO perDTO)
+        public async Task<BlogPost> UpdateBlogpostById(int id, BlogPostDTO perDTO)
         {
             var s = await _blogrepository.GetByAny(x => x.Id == id);
             if (s == null)

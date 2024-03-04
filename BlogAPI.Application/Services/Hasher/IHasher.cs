@@ -8,8 +8,8 @@ namespace BlogAPI.Application.Services.Hasher
 {
     public interface IHasher
     {
-        public string Encrypt(string password);
-        public bool Verify(string hash, string password);
+        string Encrypt(string password, string salt);
+        bool Verify(string hash, string password, string salt);
 
     }
 }

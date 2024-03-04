@@ -20,4 +20,8 @@
     <ProjectReference Include="..\BlogAPI.Infrastructure\BlogAPI.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\Images\" />
+  </ItemGroup>
+
 </Project>

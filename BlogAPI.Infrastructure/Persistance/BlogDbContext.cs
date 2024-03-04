@@ -26,7 +26,6 @@ namespace BlogAPI.Infrastructure.Persistance
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<Role>()
                 .HasMany(x => x.Permissions)
@@ -47,6 +46,7 @@ namespace BlogAPI.Infrastructure.Persistance
 
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
+            base.OnModelCreating(modelBuilder);
         }
     }
 }
