@@ -1,4 +1,5 @@
-﻿using BlogAPI.Application.Services.UserServices;
+﻿using BlogAPI.Application.Services.Hasher;
+using BlogAPI.Application.Services.UserServices;
 using BlogAPI.Domain.Entities.DTOs;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -18,11 +19,13 @@ namespace BlogAPI.Application.Services.AuthServices
 
         private readonly IConfiguration _conf;
         private readonly IUserService _userService;
+        private readonly IHasher _hasher;
 
-        public AuthorizationService(IConfiguration conf, IUserService userService)
+        public AuthorizationService(IConfiguration conf, IUserService userService, IHasher hasher)
         {
             _conf = conf;
             _userService = userService;
+            _hasher = hasher;
         }
 
         public async Task<string> GenerateToken(LoginDTO user)
@@ -81,7 +84,7 @@ namespace BlogAPI.Application.Services.AuthServices
         {
             var result = await _userService.GetUserByLogin(user.Login);
 
-            if (user.Login == result.Login && user.Password == result.PasswordHash)
+            if (user.Login == result.Login && _hasher.Encrypt(user.Password,result.Salt) == result.PasswordHash)
             {
                 return true;
             }

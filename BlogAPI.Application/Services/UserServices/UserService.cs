@@ -25,17 +25,17 @@ namespace BlogAPI.Application.Services.UserServices
         public async Task<User> CreateUser(UserDTO usDTO)
         {
             var checker = await _usRepo.GetByAny(x => x.Login == usDTO.Login || x.Email == usDTO.Email);
+            var salt = Guid.NewGuid().ToString("N");
             if (checker == null)
             {
-
-                var salt = Guid.NewGuid().ToString();
-                var password = _psHasher.Encrypt(usDTO.Password);
+                var password = _psHasher.Encrypt(usDTO.Password,salt);
                 var res = await _usRepo.Create(new User()
                 {
                     FullName = usDTO.FullName,
                     Email = usDTO.Email,
                     Login = usDTO.Login,
-                    PasswordHash = password,                
+                    PasswordHash = password,   
+                    Salt = salt
                 });
                 return res;
             }
@@ -104,7 +104,7 @@ namespace BlogAPI.Application.Services.UserServices
                     return new User() { Login = "Login is blocked" };
                 }
 
-                var pass = _psHasher.Encrypt(usDTO.Password);
+                var pass = _psHasher.Encrypt(usDTO.Password, user.Salt);
                 user.FullName = usDTO.FullName;
                 user.Email = usDTO.Email;
                 user.Login = usDTO.Login;
@@ -144,7 +144,7 @@ namespace BlogAPI.Application.Services.UserServices
 
             user.FullName = usDTO.FullName;
 
-            var pass = _psHasher.Encrypt(usDTO.Password);
+            var pass = _psHasher.Encrypt(usDTO.Password,user.Salt);
             user.PasswordHash = pass;
 
             var updatedUser = await _usRepo.Update(user);

@@ -9,35 +9,21 @@ namespace BlogAPI.Application.Services.Hasher
         private const int KeySize = 32;
         private const int IterationsCount = 1000;
 
-        public string Encrypt(string password)
+        public string Encrypt(string password, string salt)
         {
             using (var algorithm = new Rfc2898DeriveBytes(
                 password: password,
-                saltSize: 16,
+                salt: Encoding.UTF8.GetBytes(salt),
                 iterations: IterationsCount,
                 hashAlgorithm: HashAlgorithmName.SHA256))
             {
-                var bytes = algorithm.GetBytes(KeySize);
-                return Convert.ToBase64String(bytes);
+                return Convert.ToBase64String(algorithm.GetBytes(KeySize));
             }
         }
 
-        public bool Verify(string hash, string password)
+        public bool Verify(string hash, string password, string salt)
         {
-            var computedHash = Encrypt(password);
-            return ConstantTimeComparison(computedHash, hash);
-        }
-
-        private static bool ConstantTimeComparison(string computedHash, string hash)
-        {
-            if (computedHash.Length != hash.Length)
-                return false;
-
-            var difference = 0;
-            for (var i = 0; i < computedHash.Length; i++)
-                difference |= computedHash[i] ^ hash[i];
-
-            return difference == 0;
+            return Encrypt(password, salt).SequenceEqual(hash);
         }
     }
 }
