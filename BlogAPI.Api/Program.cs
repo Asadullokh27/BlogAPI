@@ -46,7 +46,7 @@ namespace BlogAPI.API
                 };
                 c.AddSecurityRequirement(securityRequirement);
             });
-
+            //something
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                            .AddJwtBearer(
                                options =>
